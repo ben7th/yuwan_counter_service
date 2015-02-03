@@ -3,7 +3,7 @@ class ChatLine
   include Mongoid::Document
   include Mongoid::Timestamps
 
- 
+  field :room_id,          type: Integer
   field :manager,          type: String
   field :text,             type: String
   field :username,         type: String
