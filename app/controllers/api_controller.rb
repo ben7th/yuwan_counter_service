@@ -7,8 +7,8 @@ class ApiController < ApplicationController
   
   def chat_lines
 
-    params[:chat_lines].each do |chat_line|
-      talk_time = Time.at(chat_line['talk_time'] / 1000)
+    params[:chat_lines].each do |index, chat_line|
+      talk_time = Time.at(chat_line['talk_time'].to_i / 1000)
       ChatLine.create(
         :room_id => chat_line['room_id'],
         :manager => chat_line['manager'],
