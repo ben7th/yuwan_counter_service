@@ -47,3 +47,23 @@ gem "unicorn", group: :production
 gem "mina",
     :git => "git://github.com/fushang318/mina.git",
     :tag => "v0.2.0fix"
+
+
+
+
+
+
+
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.0'
+  gem 'database_cleaner'
+  gem 'factory_girl_rails'
+end
+
+
+
+
+
+
+
