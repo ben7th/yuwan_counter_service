@@ -12,7 +12,7 @@ class ApiController < ApplicationController
       ChatLine.create(
         :room_id => chat_line['room_id'],
         :manager => chat_line['manager'],
-        :text => chat_line['room_id'],
+        :text => chat_line['text'],
         :username => chat_line['username'],
         :userlevel => chat_line['userlevel'],
         :talk_time => talk_time,
