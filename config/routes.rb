@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :api do
     collection do
       post :chat_lines
+      post :room_status
     end
   end
 
