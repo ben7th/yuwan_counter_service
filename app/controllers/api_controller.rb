@@ -20,9 +20,23 @@ class ApiController < ApplicationController
       )
     end
 
-    render :text => ChatLine.all.length
+    render :nothing => true
+  end
 
-    # render :nothing => true
+
+
+  def room_status
+
+    current_room = params[:room_status]
+
+    RoomStatus.create(
+      :room_id => current_room['room_id'],
+      :follow_count => current_room['follow_count'],
+      :online_number => current_room['online_number'],
+      :time => Time.at(current_room['time'].to_i / 1000)
+    )
+
+    render :nothing => true
   end
 
 
