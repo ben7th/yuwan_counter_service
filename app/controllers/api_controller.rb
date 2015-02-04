@@ -1,5 +1,9 @@
 class ApiController < ApplicationController
-
+  before_filter :set_access_control_headers
+  def set_access_control_headers
+    response.headers['Access-Control-Allow-Origin']   = request.headers["Origin"]
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
+  end
   
   def chat_lines
 
