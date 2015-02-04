@@ -4,7 +4,6 @@ class ApiController < ApplicationController
   def chat_lines
 
     params[:chat_lines].each do |chat_line|
-      # chat_line_params = chat_line
       ChatLine.create(
         :room_id => chat_line['room_id'],
         :manager => chat_line['manager'],
