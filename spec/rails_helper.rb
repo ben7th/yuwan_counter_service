@@ -53,8 +53,15 @@ RSpec.configure do |config|
   #   DatabaseCleaner.clean
   # end
 
+  
+
   config.before :each do
     Mongoid.purge!
+  end
+
+
+  config.after(:each) do
+    Timecop.return
   end
   
 end
