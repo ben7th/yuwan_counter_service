@@ -45,7 +45,7 @@ describe ApiController do
           
           3.times do |item|
             i = rand(4)
-            FactoryGirl.create(:chat_line, :chat_type => types[i])
+            FactoryGirl.create(:chat_line, :room_id => '1', :chat_type => types[i])
           end
 
         end
@@ -54,7 +54,7 @@ describe ApiController do
           
           4.times do |item|
             i = rand(4)
-            FactoryGirl.create(:chat_line, :chat_type => types[i])
+            FactoryGirl.create(:chat_line, :room_id => '2', :chat_type => types[i])
           end
 
         end
@@ -63,7 +63,7 @@ describe ApiController do
           
           3.times do |item|
             i = rand(4)
-            FactoryGirl.create(:chat_line, :chat_type => types[i])
+            FactoryGirl.create(:chat_line, :room_id => '3', :chat_type => types[i])
           end
 
         end
@@ -71,6 +71,18 @@ describe ApiController do
 
       it '准备数据' do
         expect(ChatLine.all.length).to eq(10)
+      end
+
+      it 'by_room_id' do
+        expect(ChatLine.by_room_id(1).length).to eq(3)
+      end
+
+      it 'by_month' do
+        expect(ChatLine.by_month('2015-02-01', '2015-06-01').length).to eq(7)
+      end
+
+      it 'by_room_id && by_month' do
+        expect(ChatLine.by_room_id(1).by_month('2015-02-01', '2015-06-01').length).to eq(3)
       end
     end
     
