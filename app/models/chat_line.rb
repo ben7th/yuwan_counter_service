@@ -18,19 +18,19 @@ class ChatLine
   scope :by_room_id, ->(room_id) { where(:room_id => room_id) }
 
   scope :by_month_scope, ->(start_month, end_month) { 
-    where(:talk_time.gte => format(start_month), :talk_time.lte => format(end_month)) 
+    where(:talk_time.gte => start_month, :talk_time.lte => end_month) 
   }
   scope :by_week_scope, ->(start_week, end_week) { 
-    where(:talk_time.gte => format(start_week), :talk_time.lte => format(end_week)) 
+    where(:talk_time.gte => start_week, :talk_time.lte => end_week) 
   }
   scope :by_day_scope, ->(start_day, end_day) { 
-    where(:talk_time.gte => format(start_day), :talk_time.lte => format(end_day)) 
+    where(:talk_time.gte => start_day, :talk_time.lte => end_day) 
   }
   scope :by_hour_scope, ->(start_hour, end_hour) { 
-    where(:talk_time.gte => format(start_hour), :talk_time.lte => format(end_hour)) 
+    where(:talk_time.gte => start_hour, :talk_time.lte => end_hour) 
   }
   scope :by_minute_scope, ->(start_minute, end_minute) { 
-    where(:talk_time.gte => format(start_minute), :talk_time.lte => format(end_minute)) 
+    where(:talk_time.gte => start_minute, :talk_time.lte => end_minute) 
   }
 
   
