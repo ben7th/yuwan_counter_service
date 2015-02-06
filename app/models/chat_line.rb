@@ -33,11 +33,12 @@ class ChatLine
     where(:talk_time.gte => start_minute, :talk_time.lte => end_minute) 
   }
 
+
   
   def self.by_datetime(datetime, start_str, end_str)
     define_method(datetime) {
       start_time = StrTimeUtil.send("start_#{datetime}_str_to_time", start_str)
-      end_time = StrTimeUtil.send("start_#{datetime}_str_to_time", end_str)
+      end_time = StrTimeUtil.send("end_#{datetime}_str_to_time", end_str)
       keys = StrTimeUtil.send("#{datetime}_str_list", start_str, end_str)
 
       chat_lines = eval("by_#{datetime}_scope(#{start_time}, #{end_time})")

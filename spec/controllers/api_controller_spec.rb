@@ -122,7 +122,7 @@ describe ApiController do
         t = Time.local(2014, 12, 4, 0, 0, 0)
         Timecop.travel(t) do
 
-          1.times do |item|
+          8.times do |item|
             i = rand(4)
             FactoryGirl.create(:chat_line, :chat_type => @types[i])
           end
@@ -144,7 +144,7 @@ describe ApiController do
 
 
       it '数量正确' do
-        expect(ChatLine.by_day(@start_day, @end_day).length).to eq(3)
+        expect(ChatLine.by_day(@start_day, @end_day).length).to eq(10)
       end
 
     end
@@ -183,7 +183,7 @@ describe ApiController do
 
 
       it '数量正确' do
-        expect(ChatLine.by_day(@start_hour, @end_hour).length).to eq(2)
+        expect(ChatLine.by_hour(@start_hour, @end_hour).length).to eq(2)
       end
 
     end
@@ -220,7 +220,8 @@ describe ApiController do
 
 
       it '数量正确' do
-        expect(ChatLine.by_day(@start_minute, @end_minute).length).to eq(7)
+        p ChatLine.by_minute(@start_minute, @end_minute).first
+        expect(ChatLine.by_minute(@start_minute, @end_minute).length).to eq(7)
       end
 
     end
