@@ -170,32 +170,27 @@ class StrTimeUtil
 
   # time(2015-02-05 15:50:42 +0800) => "2015-02"
   def self.time_to_month_str(time)
-    time = time.getlocal("+08:00")
     time.strftime("%Y-%m")
   end
 
   # time(2015-02-05 15:50:42 +0800) => "2015-02-W1"
   def self.time_to_week_str(time)
-    time = time.getlocal("+08:00")
     time = time.beginning_of_week
     "#{time.strftime("%Y-%m")}-W#{(time.day-1)/7+1}"
   end
 
   # time(2015-02-05 15:50:42 +0800) => "2015-02-05"
   def self.time_to_day_str(time)
-    time = time.getlocal("+08:00")
     time.strftime("%Y-%m-%d")
   end
 
   # time(2015-02-05 15:50:42 +0800) => "2015-02-05 15:"
   def self.time_to_hour_str(time)
-    time = time.getlocal("+08:00")
     time.strftime("%Y-%m-%d %H:")
   end
 
   # time(2015-02-05 15:50:42 +0800) => "2015-02-05 15:50"
   def self.time_to_minute_str(time)
-    time = time.getlocal("+08:00")
     time.strftime("%Y-%m-%d %H:%M")
   end
 
