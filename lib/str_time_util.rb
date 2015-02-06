@@ -10,7 +10,7 @@ class StrTimeUtil
     year  = match_data[1].to_i
     month = match_data[2].to_i
     begin
-      time = Time.new(match_data[1], match_data[2])
+      time = Time.new(match_data[1], match_data[2],1,0,0,0,'+08:00')
     rescue
       raise StringFormatError.new("时间字符串格式错误")
     end
@@ -40,7 +40,7 @@ class StrTimeUtil
     month = match_data[2].to_i
     week = match_data[3].to_i
     begin
-      time = Time.new(year,month)
+      time = Time.new(year,month,1,0,0,0,"+08:00")
     rescue
       raise StringFormatError.new("时间字符串格式错误")
     end
@@ -68,7 +68,7 @@ class StrTimeUtil
     month = match_data[2].to_i
     day = match_data[3].to_i
     begin
-      time = Time.new(year,month,day)
+      time = Time.new(year,month,day,0,0,0,"+08:00")
     rescue
       raise StringFormatError.new("时间字符串格式错误")
     end
@@ -101,7 +101,7 @@ class StrTimeUtil
     day   = match_data[3].to_i
     hour  = match_data[4].to_i
     begin
-      time = Time.new(year,month,day,hour)
+      time = Time.new(year,month,day,hour,0,0,"+08:00")
     rescue
       raise StringFormatError.new("时间字符串格式错误")
     end
@@ -138,7 +138,7 @@ class StrTimeUtil
     hour  = match_data[4].to_i
     minute = match_data[5].to_i
     begin
-      time = Time.new(year,month,day,hour,minute)
+      time = Time.new(year,month,day,hour,minute,0,"+08:00")
     rescue
       raise StringFormatError.new("时间字符串格式错误")
     end
