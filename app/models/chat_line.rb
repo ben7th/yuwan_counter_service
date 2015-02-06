@@ -66,6 +66,10 @@ class ChatLine
     by_datetime('day', start_str, end_str)
   end
 
+  def self.by_hour(start_str, end_str)
+    by_datetime('hour', start_str, end_str)
+  end
+
   def self.by_minute(start_str, end_str)
     by_datetime('minute', start_str, end_str)
   end
