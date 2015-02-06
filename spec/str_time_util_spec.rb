@@ -179,4 +179,45 @@ RSpec.describe StrTimeUtil do
       end
     end
   end
+
+  describe 'time_to_str' do
+    it 'time_to_month_str' do
+      # time(2015-02-05 15:50:42 +0800) => "2015-02"
+      time = Time.new(2015,2,5,15,50,42)
+      str = StrTimeUtil.time_to_month_str(time)
+      expect(str).to eq('2015-02')
+    end
+
+    it 'time_to_week_str' do
+      # time(2015-02-05 15:50:42 +0800) => "2015-02-W1"
+      time = Time.new(2015,2,5,15,50,42)
+      str = StrTimeUtil.time_to_week_str(time)
+      expect(str).to eq('2015-02-W1')
+
+      time = Time.new(2015,2,16,15,50,42)
+      str = StrTimeUtil.time_to_week_str(time)
+      expect(str).to eq('2015-02-W3')
+    end
+
+    it 'time_to_day_str' do
+      # time(2015-02-05 15:50:42 +0800) => "2015-02-05"
+      time = Time.new(2015,2,5,15,50,42)
+      str = StrTimeUtil.time_to_day_str(time)
+      expect(str).to eq('2015-02-05')
+    end
+
+    it 'time_to_hour_str' do
+      # time(2015-02-05 15:50:42 +0800) => "2015-02-05 15:"
+      time = Time.new(2015,2,5,15,50,42)
+      str = StrTimeUtil.time_to_hour_str(time)
+      expect(str).to eq('2015-02-05 15:')
+    end
+
+    it 'time_to_minute_str' do
+      # time(2015-02-05 15:50:42 +0800) => "2015-02-05 15:50"
+      time = Time.new(2015,2,5,15,50,42)
+      str = StrTimeUtil.time_to_minute_str(time)
+      expect(str).to eq('2015-02-05 15:50')
+    end
+  end
 end
