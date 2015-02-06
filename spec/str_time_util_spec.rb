@@ -220,4 +220,46 @@ RSpec.describe StrTimeUtil do
       expect(str).to eq('2015-02-05 15:50')
     end
   end
+
+  describe 'str_list' do
+    it 'month_str_list' do
+      start_str = "2014-02"
+      end_str = "2014-05"
+      # 返回值  => ["2014-02","2014-03","2014-04","2014-05"]
+      list = StrTimeUtil.month_str_list(start_str,end_str)
+      expect(list).to eq(["2014-02","2014-03","2014-04","2014-05"])
+    end
+
+    it 'week_str_list' do
+      start_str = "2014-02-W1"
+      end_str = "2014-02-W3"
+      # 返回值  => ["2014-02-W1","2014-02-W2","2014-02-W3"]
+      list = StrTimeUtil.week_str_list(start_str,end_str)
+      expect(list).to eq(["2014-02-W1","2014-02-W2","2014-02-W3"])
+    end
+
+    it 'day_str_list' do
+      start_str = "2014-02-01"
+      end_str   = "2014-02-03"
+      # 返回值  => ["2014-02-01","2014-02-02","2014-02-03"]
+      list = StrTimeUtil.day_str_list(start_str,end_str)
+      expect(list).to eq(["2014-02-01","2014-02-02","2014-02-03"])
+    end
+
+    it 'hour_str_list' do
+      start_str = "2014-02-01 01:"
+      end_str   = "2014-02-01 03:"
+      # 返回值  => ["2014-02-01 01:","2014-02-01 02:","2014-02-01 03:"]
+      list = StrTimeUtil.hour_str_list(start_str,end_str)
+      expect(list).to eq(["2014-02-01 01:","2014-02-01 02:","2014-02-01 03:"])
+    end
+
+    it 'minute_str_list' do
+      start_str = "2014-02-01 01:01"
+      end_str   = "2014-02-01 01:03"
+      # 返回值  => ["2014-02-01 01:01","2014-02-01 01:02","2014-02-01 01:03"]
+      list = StrTimeUtil.minute_str_list(start_str,end_str)
+      expect(list).to eq(["2014-02-01 01:01","2014-02-01 01:02","2014-02-01 01:03"])
+    end
+  end
 end
