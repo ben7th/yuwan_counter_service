@@ -144,7 +144,7 @@ describe ApiController do
 
 
       it '数量正确' do
-        expect(ChatLine.by_day(@start_day, @end_day).length).to eq(3)
+        expect(ChatLine.by_day(@start_day, @end_day).length).to eq(10)
       end
 
     end
