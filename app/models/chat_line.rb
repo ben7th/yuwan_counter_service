@@ -34,11 +34,7 @@ class ChatLine
   }
 
 
-  def self.method_missing(method, *args)
-    start_str = args[0]
-    end_str = args[1]
-    time_format = method.to_s[3..-1]
-
+  def self.by_datetime(time_format, start_str, end_str)
     eval "
       start_time = StrTimeUtil.start_#{time_format}_str_to_time(start_str)
       end_time = StrTimeUtil.end_#{time_format}_str_to_time(end_str)
@@ -59,6 +55,29 @@ class ChatLine
 
       return list_data
     "
+  end
+
+
+  def self.by_month(start_str, end_str)
+    by_datetime('month', start_str, end_str)
+  end
+
+  def self.by_week(start_str, end_str)
+    by_datetime('week', start_str, end_str)
+  end
+
+
+  def self.by_day(start_str, end_str)
+    by_datetime('day', start_str, end_str)
+  end
+
+
+  def self.by_hour(start_str, end_str)
+    by_datetime('hour', start_str, end_str)
+  end
+
+  def self.by_minute(start_str, end_str)
+    by_datetime('minute', start_str, end_str)
   end
 
 

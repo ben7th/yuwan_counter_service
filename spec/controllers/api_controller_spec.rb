@@ -40,6 +40,32 @@ describe ApiController do
       @types = ['chat', 'welcome', 'forbid', 'yuwan']
     }
 
+
+    describe "by_room_id && by_month" do
+      before {
+        @start_month = '2014-02'
+        @end_month = '2014-03'
+
+        t = Time.local(2014, 2, 1, 0, 0, 0)
+        Timecop.travel(t) do
+
+          3.times do |item|
+            i = rand(4)
+            FactoryGirl.create(:chat_line, :room_id => 10, :chat_type => @types[i])
+          end
+
+        end
+
+
+        @chat_lines = ChatLine.by_month(@start_month, @end_month)
+      }
+
+
+      it 'room_id && month' do
+        expect(ChatLine.by_room_id(10).by_month(@start_month, @end_month)['2014-02']).to eq(3)
+      end
+    end
+
     describe "by_month" do
       before {
         @start_month = '2014-02'
