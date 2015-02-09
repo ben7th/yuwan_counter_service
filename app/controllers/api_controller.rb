@@ -1,7 +1,9 @@
 class ApiController < ApplicationController
   before_filter :set_access_control_headers
   def set_access_control_headers
-    response.headers['Access-Control-Allow-Origin']   = request.headers["Origin"]
+    if !request.headers["Origin"].blank?
+      response.headers['Access-Control-Allow-Origin']   = request.headers["Origin"]
+    end
     response.headers['Access-Control-Allow-Credentials'] = 'true'
   end
   
