@@ -33,31 +33,6 @@ class ChatLine
     where(:talk_time.gte => start_minute, :talk_time.lt => end_minute) 
   }
 
-
-  def self.by_datetime(time_format, start_str, end_str)
-    eval "
-      start_time = StrTimeUtil.start_#{time_format}_str_to_time(start_str)
-      end_time = StrTimeUtil.end_#{time_format}_str_to_time(end_str)
-      keys = StrTimeUtil.#{time_format}_str_list(start_str, end_str)
-
-
-      chat_lines = self.where(:talk_time.gte => start_time, :talk_time.lt => end_time)
-
-      list_data = Hash.new
-      keys.each do |key|
-        list_data[key] = 0
-        chat_lines.each do |item|
-          time = StrTimeUtil.time_to_#{time_format}_str(item.talk_time)
-          list_data[key] += 1 if time == key
-        end
-      end
-
-
-      return list_data
-    "
-  end
-
-
   def self.by_month(start_str, end_str)
     by_datetime('month', start_str, end_str)
   end
@@ -81,6 +56,18 @@ class ChatLine
   end
 
 
-
+  def self.by_datetime(time_format, start_str, end_str)
+    eval "
+      keys = StrTimeUtil.#{time_format}_str_list(start_str, end_str)
+      result_data = {}
+      keys.each do |key|
+        start_time = StrTimeUtil.start_#{time_format}_str_to_time(key)
+        end_time = StrTimeUtil.end_#{time_format}_str_to_time(key)
+        count = self.where(:talk_time.gte => start_time, :talk_time.lt => end_time).count
+        result_data[key] = count
+      end
+      return result_data
+    "
+  end
 
 end
