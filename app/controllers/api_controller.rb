@@ -40,6 +40,30 @@ class ApiController < ApplicationController
   end
 
 
+  def chat_lines_stat
+    # 指定要查询的聊天记录类型，不传这个参数时就查询全部的，参数为用逗号连接的多个类型组成的字符串"chat,welcome,forbid,yuwan"
+    #for
+    if params[:for].blank?
+      chat_line_types = ['chat','welcome','forbid','yuwan']
+    else
+      chat_line_types = params[:for].split(",")
+    end
+
+    room_id = params[:room_id]
+    by      = params[:by]
+    start_str = params[:start]
+    end_str   = params[:end]
+
+    data = ChatLine.
+      by_room_id(room_id).
+      in(chat_type: chat_line_types).
+      send("by_#{by}", start_str, end_str)
+
+    render :json => {
+      :by   => by,
+      :data => data
+    }
+  end
 end
 
 
