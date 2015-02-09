@@ -59,18 +59,29 @@ describe ApiController do
         t = Time.local(2014, 4, 1, 0, 0, 0)
         Timecop.travel(t - 1.day) do
           
-          2.times do |item|
+          1.times do |item|
             i = rand(4)
             FactoryGirl.create(:chat_line, :chat_type => @types[i])
           end
 
         end
 
+
+        @chat_lines = ChatLine.by_month(@start_month, @end_month)
+
       }
 
 
-      it '数量正确' do
-        expect(ChatLine.by_month(@start_month, @end_month).length).to eq(5)
+      it '总数量正确' do
+        expect(@chat_lines.length).to eq(2)
+      end
+
+      it '2014-02' do
+        expect(@chat_lines['2014-02']).to eq(3)
+      end
+
+      it '2014-03' do
+        expect(@chat_lines['2014-03']).to eq(1)
       end
 
     end
@@ -102,11 +113,23 @@ describe ApiController do
 
         end
 
+
+        @chat_lines = ChatLine.by_week(@start_week, @end_week)
+
       }
 
 
-      it '数量正确' do
-        expect(ChatLine.by_week(@start_week, @end_week).length).to eq(4)
+      it '总数量正确' do
+        # p @chat_lines
+        expect(@chat_lines.length).to eq(9)
+      end
+
+      it '2014-12-W1' do
+        expect(@chat_lines['2014-12-W1']).to eq(2)
+      end
+
+      it '2015-01-W4' do
+        expect(@chat_lines['2015-01-W4']).to eq(2)
       end
 
     end
@@ -140,11 +163,22 @@ describe ApiController do
 
         end
 
+        @chat_lines = ChatLine.by_day(@start_day, @end_day)
+
       }
 
 
-      it '数量正确' do
-        expect(ChatLine.by_day(@start_day, @end_day).length).to eq(10)
+      it '总数量正确' do
+        # p @chat_lines
+        expect(@chat_lines.length).to eq(59)
+      end
+
+      it '2014-12-04' do
+        expect(@chat_lines['2014-12-04']).to eq(8)
+      end
+
+      it '2015-01-31' do
+        expect(@chat_lines['2015-01-31']).to eq(2)
       end
 
     end
@@ -179,11 +213,17 @@ describe ApiController do
 
         end
 
+        @chat_lines = ChatLine.by_hour(@start_hour, @end_hour)
+
       }
 
 
-      it '数量正确' do
-        expect(ChatLine.by_hour(@start_hour, @end_hour).length).to eq(2)
+      it '2014-12-04 21:' do
+        expect(@chat_lines['2014-12-04 21:']).to eq(1)
+      end
+
+      it '2015-01-16 08:' do
+        expect(@chat_lines['2015-01-16 08:']).to eq(1)
       end
 
     end
@@ -192,10 +232,10 @@ describe ApiController do
 
     describe "by_minute" do
       before {
-        @start_minute = '2014-12-04 21:03'
+        @start_minute = '2015-01-16 07:03'
         @end_minute = '2015-01-16 08:27'
 
-        t = Time.local(2014, 12, 4, 21, 3, 0)
+        t = Time.local(2015, 01, 16, 07, 3, 0)
         Timecop.travel(t) do
 
           5.times do |item|
@@ -216,12 +256,18 @@ describe ApiController do
 
         end
 
+
+        @chat_lines = ChatLine.by_minute(@start_minute, @end_minute)
+
       }
 
 
-      it '数量正确' do
-        p ChatLine.by_minute(@start_minute, @end_minute).first
-        expect(ChatLine.by_minute(@start_minute, @end_minute).length).to eq(7)
+      it '2014-01-15 21:03' do
+        expect(@chat_lines['2015-01-16 07:03']).to eq(5)
+      end
+
+      it '2015-01-16 08:27' do
+        expect(@chat_lines['2015-01-16 08:27']).to eq(2)
       end
 
     end
