@@ -66,6 +66,25 @@ class ApiController < ApplicationController
       :data => data
     }
   end
+
+
+  def username_yuwan_stat
+    room_id = params[:room_id]
+    by      = params[:by]
+    start_str = params[:start]
+    end_str   = params[:end]
+
+    data = ChatLine.
+      by_room_id(room_id).
+      in(chat_type: ['yuwan']).
+      send("username_yuwan_stat", by, start_str, end_str)
+
+    render :json => {
+      :by   => by,
+      :data => data
+    }
+  end
+
 end
 
 

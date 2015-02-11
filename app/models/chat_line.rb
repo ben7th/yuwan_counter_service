@@ -70,4 +70,22 @@ class ChatLine
     "
   end
 
+
+  def self.username_yuwan_stat(time_str_type, start_time_str, end_time_str)
+    eval "
+      keys = StrTimeUtil.#{time_str_type}_str_list(start_time_str, end_time_str)
+      result_data = {}
+      keys.each do |key|
+        start_time = StrTimeUtil.start_#{time_str_type}_str_to_time(key)
+        end_time = StrTimeUtil.end_#{time_str_type}_str_to_time(key)
+        user_data = self.where(:talk_time.gte => start_time, :talk_time.lt => end_time).group_by{|d| d.username }
+        user_data = user_data.each do |username, items|
+          user_data[username] = items.count * 100
+        end
+        result_data[key] = user_data
+      end
+      return result_data
+    "
+  end
+
 end
