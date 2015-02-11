@@ -76,7 +76,6 @@ class ApiController < ApplicationController
 
     data = ChatLine.
       by_room_id(room_id).
-      in(chat_type: ['yuwan']).
       send("username_yuwan_stat", by, start_str, end_str)
 
     render :json => {
