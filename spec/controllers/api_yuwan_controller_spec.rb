@@ -14,12 +14,14 @@ describe ApiController do
 
           3.times do |item|
             i = rand(4)
+            FactoryGirl.create(:chat_line, :username => 'luffy1')
             FactoryGirl.create(:chat_line, :username => 'luffy1', :chat_type => 'yuwan')
           end
 
           2.times do |item|
             i = rand(4)
             FactoryGirl.create(:chat_line, :username => 'luffy2', :chat_type => 'yuwan')
+            FactoryGirl.create(:chat_line, :username => 'luffy2')
           end
 
         end

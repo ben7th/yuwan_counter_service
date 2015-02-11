@@ -78,7 +78,11 @@ class ChatLine
       keys.each do |key|
         start_time = StrTimeUtil.start_#{time_str_type}_str_to_time(key)
         end_time = StrTimeUtil.end_#{time_str_type}_str_to_time(key)
-        user_data = self.where(:talk_time.gte => start_time, :talk_time.lt => end_time).group_by{|d| d.username }
+        user_data = self.where(
+          :talk_time.gte => start_time, 
+          :talk_time.lt => end_time,
+          :chat_type => 'yuwan').group_by{|d| d.username }
+
         user_data = user_data.each do |username, items|
           user_data[username] = items.count * 100
         end
