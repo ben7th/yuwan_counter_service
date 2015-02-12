@@ -19,6 +19,8 @@ class ChatLine
 
   index talk_time: 1
   index room_id: 1
+  index chat_type: 1
+  
   validates :room_id, :presence => true
 
 
@@ -167,6 +169,60 @@ class ChatLine
       result[key] = self.username_all_chat_stat(time_str_type, key, key)
     end
     result
+  end
+
+  def self.username_yuwan_stat(time_str_type, start_time_str, end_time_str)
+    keys = StrTimeUtil.send("#{time_str_type}_str_list", start_time_str, end_time_str)
+    result_data = {}
+    keys.each do |key|
+      start_time = StrTimeUtil.send("start_#{time_str_type}_str_to_time", key)
+      end_time = StrTimeUtil.send("end_#{time_str_type}_str_to_time", key)
+
+      user_data = self.collection.aggregate(
+          {
+            "$match" => {
+              talk_time: {
+                "$gte" => start_time,
+                "$lt" => end_time,
+              },
+              chat_type: {
+                "$in" => ['yuwan']
+              },
+            },
+          },  
+          {
+            "$group" => {
+              _id: "$username", 
+              count: { "$sum" => 100 }
+            }
+          },
+          
+      )
+
+      result_data[key] = user_data
+    end
+    result_data
+
+
+    # eval "
+    #   keys = StrTimeUtil.#{time_str_type}_str_list(start_time_str, end_time_str)
+    #   result_data = {}
+    #   keys.each do |key|
+    #     start_time = StrTimeUtil.start_#{time_str_type}_str_to_time(key)
+    #     end_time = StrTimeUtil.end_#{time_str_type}_str_to_time(key)
+    #     user_data = self.where(
+    #       :talk_time.gte => start_time, 
+    #       :talk_time.lt => end_time,
+    #       :chat_type => 'yuwan').group_by{|d| d.username }
+
+
+    #     user_data = user_data.each do |username, items|
+    #       user_data[username] = items.count * 100
+    #     end
+    #     result_data[key] = user_data
+    #   end
+    #   return result_data
+    # "
   end
 
 end
