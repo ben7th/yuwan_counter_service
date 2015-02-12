@@ -1,4 +1,10 @@
 class ChatLine
+  class ChatType
+    CHAT    = 'chat'
+    WELCOME = 'welcome'
+    FORBID  = 'forbid'
+    YUWAN   = 'yuwan'
+  end
 
   include Mongoid::Document
   include Mongoid::Timestamps
@@ -12,6 +18,9 @@ class ChatLine
   field :chat_type,        type: String
 
   index talk_time: 1
+  index room_id: 1
+  index chat_type: 1
+  index username: 1
   validates :room_id, :presence => true
 
 
@@ -68,6 +77,58 @@ class ChatLine
       end
       return result_data
     "
+  end
+
+  # time_str_type =  'month' |  'week' | 'day' | 'hour' | 'minute'
+  # start_time_str 和 end_time_str 格式根据 time_str_type 决定
+  #   result 格式
+  #   {
+  #     # key 是 username
+  #     # value 是 user 的 chat 类型的ChatLine 记录数
+  #     "张三" => 3,
+  #     "李四" => 2,
+  #     "王五" => 5,
+  #     "赵六" => 6,
+  #     "赵七" => 7,
+  #     "赵八" => 8,
+  #     "赵九" => 9,
+  #     "赵二" => 2,
+  #     "赵一" => 1,
+  #     "赵拾" => 10
+  # }
+  def self.username_all_chat_stat(time_str_type, start_time_str, end_time_str)
+    # 时间内的所有人
+    start_time = StrTimeUtil.send("start_#{time_str_type}_str_to_time", start_time_str)
+    end_time =   StrTimeUtil.send("end_#{time_str_type}_str_to_time", end_time_str)
+    data = self.collection.aggregate(
+      {
+        "$match" => {
+          talk_time: {
+            "$gte" => start_time,
+            "$lt"  => end_time
+          },
+          chat_type: ChatLine::ChatType::CHAT
+        } 
+      },
+      { 
+        "$group" => {
+          _id: "$username",
+          count: { "$sum" => 1 }
+        }
+      },
+      { 
+        "$sort" => { count: -1 }  
+      },
+      { 
+        "$limit" => 10
+      }
+    )
+
+    result = {}
+    data.each do |item|
+      result[item["_id"]] = item["count"]
+    end
+    result
   end
 
 end
