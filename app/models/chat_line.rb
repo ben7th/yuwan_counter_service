@@ -12,6 +12,7 @@ class ChatLine
   field :chat_type,        type: String
 
   index talk_time: 1
+  index chat_type: 1
   validates :room_id, :presence => true
 
 
