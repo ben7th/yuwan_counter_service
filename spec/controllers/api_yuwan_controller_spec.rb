@@ -46,6 +46,7 @@ describe ApiController do
 
 
       it '总数量正确' do
+        p @chat_lines
         expect(@chat_lines.length).to eq(2)
       end
 
