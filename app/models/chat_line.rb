@@ -96,6 +96,7 @@ class ChatLine
   #     "赵一" => 1,
   #     "赵拾" => 10
   # }
+  # 详细说明请看 https://github.com/ben7th/yuwan_counter_service/issues/3
   def self.username_all_chat_stat(time_str_type, start_time_str, end_time_str)
     # 时间内的所有人
     start_time = StrTimeUtil.send("start_#{time_str_type}_str_to_time", start_time_str)
@@ -127,6 +128,45 @@ class ChatLine
     result = {}
     data.each do |item|
       result[item["_id"]] = item["count"]
+    end
+    result
+  end
+
+  # time_str_type =  'month' |  'week' | 'day' | 'hour' | 'minute'
+  # start_time_str 和 end_time_str 格式根据 time_str_type 决定
+  #   result 格式举例
+  #   {
+  #     '2015-02-01' => {
+  #       # key 是 username
+  #       # value 是 user 的 chat 类型的ChatLine 记录数
+  #       "张三" => 3,
+  #       "李四" => 2,
+  #       "王五" => 5,
+  #       "赵六" => 6,
+  #       "张三" => 3,
+  #       "李四" => 2,
+  #       "王五" => 5,
+  #       "赵六" => 6,
+  #       "赵七" => 7,
+  #       "赵八" => 8,
+  #       "赵九" => 9,
+  #       "赵二" => 2,
+  #       "赵一" => 1,
+  #       "赵拾" => 10
+        # },
+  #     '2015-02-02' => {
+  #        同上
+  #     },
+  #     '2015-02-03' => {
+  #       同上
+  #     }
+  #   }
+  # 详细说明请看 https://github.com/ben7th/yuwan_counter_service/issues/3
+  def self.username_section_chat_stat(time_str_type, start_time_str, end_time_str)
+    keys = StrTimeUtil.send("#{time_str_type}_str_list", start_time_str, end_time_str)
+    result = {}
+    keys.each do |key|
+      result[key] = self.username_all_chat_stat(time_str_type, key, key)
     end
     result
   end
