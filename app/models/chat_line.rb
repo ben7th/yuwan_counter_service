@@ -100,7 +100,12 @@ class ChatLine
           
       )
 
-      result_data[key] = user_data
+      result = {}
+      user_data.each do |item|
+        result[item["_id"]] = item["count"]
+      end
+
+      result_data[key] = result
     end
     result_data
 
