@@ -6,6 +6,7 @@ class RoomStatus
   field :room_id,          type: Integer
   field :follow_count,     type: Integer
   field :online_number,    type: Integer
+  field :yuwan_count,      type: String
   field :time,             type: DateTime
 
 

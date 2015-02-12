@@ -35,6 +35,7 @@ class ApiController < ApplicationController
       :room_id => current_room['room_id'],
       :follow_count => current_room['follow_count'],
       :online_number => current_room['online_number'],
+      :yuwan_count   => current_room['yuwan_count'],
       :time => Time.at(current_room['time'].to_i / 1000)
     )
 
