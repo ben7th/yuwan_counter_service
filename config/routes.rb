@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       post :chat_lines
       post :room_status
       get "chat_lines/stat" => "api#chat_lines_stat"
+      get "chat_lines/username_chat_stat" => "api#username_chat_stat"
     end
   end
 

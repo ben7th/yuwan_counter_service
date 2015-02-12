@@ -19,8 +19,6 @@ class ChatLine
 
   index talk_time: 1
   index room_id: 1
-  index chat_type: 1
-  index username: 1
   validates :room_id, :presence => true
 
 
