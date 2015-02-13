@@ -97,7 +97,7 @@ class ChatLine
   #     "赵拾" => 10
   # }
   # 详细说明请看 https://github.com/ben7th/yuwan_counter_service/issues/3
-  def self.username_all_chat_stat(time_str_type, start_time_str, end_time_str)
+  def self.username_all_chat_stat(room_id, time_str_type, start_time_str, end_time_str)
     # 时间内的所有人
     start_time = StrTimeUtil.send("start_#{time_str_type}_str_to_time", start_time_str)
     end_time =   StrTimeUtil.send("end_#{time_str_type}_str_to_time", end_time_str)
@@ -108,6 +108,7 @@ class ChatLine
             "$gte" => start_time,
             "$lt"  => end_time
           },
+          room_id: room_id.to_i,
           chat_type: ChatLine::ChatType::CHAT
         } 
       },
@@ -162,11 +163,11 @@ class ChatLine
   #     }
   #   }
   # 详细说明请看 https://github.com/ben7th/yuwan_counter_service/issues/3
-  def self.username_section_chat_stat(time_str_type, start_time_str, end_time_str)
+  def self.username_section_chat_stat(room_id, time_str_type, start_time_str, end_time_str)
     keys = StrTimeUtil.send("#{time_str_type}_str_list", start_time_str, end_time_str)
     result = {}
     keys.each do |key|
-      result[key] = self.username_all_chat_stat(time_str_type, key, key)
+      result[key] = self.username_all_chat_stat(room_id, time_str_type, key, key)
     end
     result
   end

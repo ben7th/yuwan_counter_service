@@ -74,12 +74,8 @@ class ApiController < ApplicationController
     start_str = params[:start]
     end_str   = params[:end]
 
-    data_all = ChatLine.
-      by_room_id(room_id).
-      username_all_chat_stat(by, start_str, end_str)
-    data_section = ChatLine.
-      by_room_id(room_id).
-      username_section_chat_stat(by, start_str, end_str)
+    data_all = ChatLine.username_all_chat_stat(room_id, by, start_str, end_str)
+    data_section = ChatLine.username_section_chat_stat(room_id, by, start_str, end_str)
 
     render :json => {
       :by   => by,

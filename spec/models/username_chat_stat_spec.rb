@@ -17,6 +17,7 @@ RSpec.describe ChatLine, :type => :model do
       end
 
       Timecop.travel(Time.local(2012, 9)) do
+        FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 9, :chat_type => ChatLine::ChatType::CHAT)
         FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 10, :chat_type => ChatLine::ChatType::WELCOME)
         FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 10, :chat_type => ChatLine::ChatType::CHAT)
       end
@@ -48,8 +49,7 @@ RSpec.describe ChatLine, :type => :model do
         FactoryGirl.create(:chat_line, :username => 'user3', :room_id => 10, :chat_type => ChatLine::ChatType::CHAT)
       end
 
-      result = ChatLine.by_room_id(10).
-        username_all_chat_stat('month','2012-09','2012-11')
+      result = ChatLine.username_all_chat_stat(10, 'month','2012-09','2012-11')
 
       expect(result).to eq({
         'user1' => 4,
@@ -72,6 +72,7 @@ RSpec.describe ChatLine, :type => :model do
       end
 
       Timecop.travel(Time.local(2015, 1, 10)) do
+        FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 9, :chat_type => ChatLine::ChatType::CHAT)
         FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 10, :chat_type => ChatLine::ChatType::WELCOME)
         FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 10, :chat_type => ChatLine::ChatType::CHAT)
       end
@@ -103,8 +104,7 @@ RSpec.describe ChatLine, :type => :model do
         FactoryGirl.create(:chat_line, :username => 'user3', :room_id => 10, :chat_type => ChatLine::ChatType::CHAT)
       end
 
-      result = ChatLine.by_room_id(10).
-        username_all_chat_stat('week','2015-01-W1','2015-01-W3')
+      result = ChatLine.username_all_chat_stat(10, 'week','2015-01-W1','2015-01-W3')
 
       expect(result).to eq({
         'user1' => 4,
@@ -127,6 +127,7 @@ RSpec.describe ChatLine, :type => :model do
       end
 
       Timecop.travel(Time.local(2015, 1, 2)) do
+        FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 9, :chat_type => ChatLine::ChatType::CHAT)
         FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 10, :chat_type => ChatLine::ChatType::WELCOME)
         FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 10, :chat_type => ChatLine::ChatType::CHAT)
       end
@@ -158,8 +159,7 @@ RSpec.describe ChatLine, :type => :model do
         FactoryGirl.create(:chat_line, :username => 'user3', :room_id => 10, :chat_type => ChatLine::ChatType::CHAT)
       end
 
-      result = ChatLine.by_room_id(10).
-        username_all_chat_stat('day','2015-01-02','2015-01-04')
+      result = ChatLine.username_all_chat_stat(10, 'day','2015-01-02','2015-01-04')
 
       expect(result).to eq({
         'user1' => 4,
@@ -182,6 +182,7 @@ RSpec.describe ChatLine, :type => :model do
       end
 
       Timecop.travel(Time.local(2015, 1, 2, 6)) do
+        FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 9, :chat_type => ChatLine::ChatType::CHAT)
         FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 10, :chat_type => ChatLine::ChatType::WELCOME)
         FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 10, :chat_type => ChatLine::ChatType::CHAT)
       end
@@ -213,8 +214,7 @@ RSpec.describe ChatLine, :type => :model do
         FactoryGirl.create(:chat_line, :username => 'user3', :room_id => 10, :chat_type => ChatLine::ChatType::CHAT)
       end
 
-      result = ChatLine.by_room_id(10).
-        username_all_chat_stat('hour','2015-01-02 06:','2015-01-02 08:')
+      result = ChatLine.username_all_chat_stat(10, 'hour','2015-01-02 06:','2015-01-02 08:')
 
       expect(result).to eq({
         'user1' => 4,
@@ -237,6 +237,7 @@ RSpec.describe ChatLine, :type => :model do
       end
 
       Timecop.travel(Time.local(2015, 1, 2, 6, 11)) do
+        FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 9, :chat_type => ChatLine::ChatType::CHAT)
         FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 10, :chat_type => ChatLine::ChatType::WELCOME)
         FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 10, :chat_type => ChatLine::ChatType::CHAT)
       end
@@ -268,8 +269,7 @@ RSpec.describe ChatLine, :type => :model do
         FactoryGirl.create(:chat_line, :username => 'user3', :room_id => 10, :chat_type => ChatLine::ChatType::CHAT)
       end
 
-      result = ChatLine.by_room_id(10).
-        username_all_chat_stat('minute','2015-01-02 06:11','2015-01-02 06:13')
+      result = ChatLine.username_all_chat_stat(10, 'minute','2015-01-02 06:11','2015-01-02 06:13')
 
       expect(result).to eq({
         'user1' => 4,
@@ -295,6 +295,7 @@ RSpec.describe ChatLine, :type => :model do
       end
 
       Timecop.travel(Time.local(2012, 9)) do
+        FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 9, :chat_type => ChatLine::ChatType::CHAT)
         FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 10, :chat_type => ChatLine::ChatType::WELCOME)
         FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 10, :chat_type => ChatLine::ChatType::CHAT)
       end
@@ -326,8 +327,7 @@ RSpec.describe ChatLine, :type => :model do
         FactoryGirl.create(:chat_line, :username => 'user3', :room_id => 10, :chat_type => ChatLine::ChatType::CHAT)
       end
 
-      result = ChatLine.by_room_id(10).
-        username_section_chat_stat('month','2012-09','2012-11')
+      result = ChatLine.username_section_chat_stat(10, 'month','2012-09','2012-11')
 
       expect(result).to eq({
         '2012-09' => {
@@ -362,6 +362,7 @@ RSpec.describe ChatLine, :type => :model do
       end
 
       Timecop.travel(Time.local(2015, 1, 10)) do
+        FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 9, :chat_type => ChatLine::ChatType::CHAT)
         FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 10, :chat_type => ChatLine::ChatType::WELCOME)
         FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 10, :chat_type => ChatLine::ChatType::CHAT)
       end
@@ -393,8 +394,7 @@ RSpec.describe ChatLine, :type => :model do
         FactoryGirl.create(:chat_line, :username => 'user3', :room_id => 10, :chat_type => ChatLine::ChatType::CHAT)
       end
 
-      result = ChatLine.by_room_id(10).
-        username_section_chat_stat('week','2015-01-W1','2015-01-W3')
+      result = ChatLine.username_section_chat_stat(10, 'week','2015-01-W1','2015-01-W3')
 
       expect(result).to eq({
         '2015-01-W1' => {
@@ -429,6 +429,7 @@ RSpec.describe ChatLine, :type => :model do
       end
 
       Timecop.travel(Time.local(2015, 1, 2)) do
+        FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 9, :chat_type => ChatLine::ChatType::CHAT)
         FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 10, :chat_type => ChatLine::ChatType::WELCOME)
         FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 10, :chat_type => ChatLine::ChatType::CHAT)
       end
@@ -460,8 +461,7 @@ RSpec.describe ChatLine, :type => :model do
         FactoryGirl.create(:chat_line, :username => 'user3', :room_id => 10, :chat_type => ChatLine::ChatType::CHAT)
       end
 
-      result = ChatLine.by_room_id(10).
-        username_section_chat_stat('day','2015-01-02','2015-01-04')
+      result = ChatLine.username_section_chat_stat(10, 'day','2015-01-02','2015-01-04')
 
       expect(result).to eq({
         '2015-01-02' => {
@@ -496,6 +496,7 @@ RSpec.describe ChatLine, :type => :model do
       end
 
       Timecop.travel(Time.local(2015, 1, 2, 6)) do
+        FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 9, :chat_type => ChatLine::ChatType::CHAT)
         FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 10, :chat_type => ChatLine::ChatType::WELCOME)
         FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 10, :chat_type => ChatLine::ChatType::CHAT)
       end
@@ -527,8 +528,7 @@ RSpec.describe ChatLine, :type => :model do
         FactoryGirl.create(:chat_line, :username => 'user3', :room_id => 10, :chat_type => ChatLine::ChatType::CHAT)
       end
 
-      result = ChatLine.by_room_id(10).
-        username_section_chat_stat('hour','2015-01-02 06:','2015-01-02 08:')
+      result = ChatLine.username_section_chat_stat(10, 'hour','2015-01-02 06:','2015-01-02 08:')
 
       expect(result).to eq({
         '2015-01-02 06:' => {
@@ -563,6 +563,7 @@ RSpec.describe ChatLine, :type => :model do
       end
 
       Timecop.travel(Time.local(2015, 1, 2, 6, 11)) do
+        FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 9, :chat_type => ChatLine::ChatType::CHAT)
         FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 10, :chat_type => ChatLine::ChatType::WELCOME)
         FactoryGirl.create(:chat_line, :username => 'user1', :room_id => 10, :chat_type => ChatLine::ChatType::CHAT)
       end
@@ -594,8 +595,7 @@ RSpec.describe ChatLine, :type => :model do
         FactoryGirl.create(:chat_line, :username => 'user3', :room_id => 10, :chat_type => ChatLine::ChatType::CHAT)
       end
 
-      result = ChatLine.by_room_id(10).
-        username_section_chat_stat('minute','2015-01-02 06:11','2015-01-02 06:13')
+      result = ChatLine.username_section_chat_stat(10, 'minute','2015-01-02 06:11','2015-01-02 06:13')
 
       expect(result).to eq({
         '2015-01-02 06:11' => {
