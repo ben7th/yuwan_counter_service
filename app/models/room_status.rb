@@ -53,11 +53,19 @@ class RoomStatus
           :room_id => room_id
         ).order_by(:time => 'asc').first
       
-      data = {
-        "follow_count"  => room_status.follow_count,
-        "online_number" => room_status.online_number,
-        "yuwan_count"   => room_status.yuwan_count
-      }
+      if !room_status.blank?
+        data = {
+          "follow_count"  => room_status.follow_count,
+          "online_number" => room_status.online_number,
+          "yuwan_count"   => room_status.yuwan_count || ""
+        }
+      else
+        data = {
+          "follow_count"  => 0,
+          "online_number" => 0,
+          "yuwan_count"   => ""
+        }
+      end
       result[key] = data
     end
     result

@@ -119,7 +119,18 @@ class ApiController < ApplicationController
     }
   end
 
+  def room_status_stat
+    room_id = params[:room_id].to_i
+    by      = params[:by]
+    start_str = params[:start]
+    end_str   = params[:end]
 
+    data = RoomStatus.stat(room_id, by, start_str, end_str)
+    render :json => {
+      :by   => by,
+      :data => data
+    }
+  end
 end
 
 

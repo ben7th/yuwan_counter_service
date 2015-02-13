@@ -42,7 +42,7 @@ RSpec.describe RoomStatus, :type => :model do
         FactoryGirl.create(:room_status, :room_id => 2, :follow_count => 28, :online_number => 288, :yuwan_count => "2888")
       end
 
-      result = RoomStatus.stat(2, 'month', '2012-09', '2012-11')
+      result = RoomStatus.stat(2, 'month', '2012-09', '2012-12')
       expect(result).to eq({
         "2012-09"=> {
           "follow_count"=>23, 
@@ -58,6 +58,11 @@ RSpec.describe RoomStatus, :type => :model do
           "follow_count"=>27,
           "online_number"=>277,
           "yuwan_count"=>"2777"
+        },
+        "2012-12" => {
+          "follow_count"=>0,
+          "online_number"=>0,
+          "yuwan_count"=>""
         }
       })
     end
