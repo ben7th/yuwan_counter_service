@@ -171,7 +171,7 @@ class ChatLine
     result
   end
 
-  def self.username_yuwan_stat(time_str_type, start_time_str, end_time_str)
+  def self.username_yuwan_stat(room_id, time_str_type, start_time_str, end_time_str)
     keys = StrTimeUtil.send("#{time_str_type}_str_list", start_time_str, end_time_str)
     result_data = {}
     keys.each do |key|
@@ -185,7 +185,8 @@ class ChatLine
                 "$gte" => start_time,
                 "$lt" => end_time,
               },
-              chat_type: ChatLine::ChatType::YUWAN
+              chat_type: ChatLine::ChatType::YUWAN,
+              room_id: room_id
             },
           },  
           {
@@ -210,7 +211,7 @@ class ChatLine
 
 
 
-  def self.manager_forbid_stat(time_str_type, start_time_str, end_time_str)
+  def self.manager_forbid_stat(room_id, time_str_type, start_time_str, end_time_str)
     keys = StrTimeUtil.send("#{time_str_type}_str_list", start_time_str, end_time_str)
     result_data = {}
     keys.each do |key|
@@ -224,7 +225,8 @@ class ChatLine
                 "$gte" => start_time,
                 "$lt" => end_time,
               },
-              chat_type: ChatLine::ChatType::FORBID
+              chat_type: ChatLine::ChatType::FORBID,
+              room_id: room_id,
             },
           },  
           {
@@ -248,7 +250,7 @@ class ChatLine
   end
 
 
-  def self.username_forbid_stat(time_str_type, start_time_str, end_time_str)
+  def self.username_forbid_stat(room_id, time_str_type, start_time_str, end_time_str)
     keys = StrTimeUtil.send("#{time_str_type}_str_list", start_time_str, end_time_str)
     result_data = {}
     keys.each do |key|
@@ -262,7 +264,8 @@ class ChatLine
                 "$gte" => start_time,
                 "$lt" => end_time,
               },
-              chat_type: ChatLine::ChatType::FORBID
+              chat_type: ChatLine::ChatType::FORBID,
+              room_id: room_id,
             },
           },  
           {

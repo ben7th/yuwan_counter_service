@@ -91,14 +91,13 @@ class ApiController < ApplicationController
   end
 
   def username_yuwan_stat
-    room_id = params[:room_id]
+    room_id = params[:room_id].to_i
     by      = params[:by]
     start_str = params[:start]
     end_str   = params[:end]
 
     data = ChatLine.
-      by_room_id(room_id).
-      username_yuwan_stat(by, start_str, end_str) 
+      username_yuwan_stat(room_id, by, start_str, end_str) 
 
     render :json => {
       :by   => by,
@@ -108,15 +107,14 @@ class ApiController < ApplicationController
 
 
   def forbid_stat
-    room_id = params[:room_id]
+    room_id = params[:room_id].to_i
     by      = params[:by]
     start_str = params[:start]
     end_str   = params[:end]
 
-    room_chat_line = ChatLine.by_room_id(room_id)
     result = {}
-    result[:manager_data] = room_chat_line.manager_forbid_stat(by, start_str, end_str)
-    result[:username_data] = room_chat_line.username_forbid_stat(by, start_str, end_str)
+    result[:manager_data] = ChatLine.manager_forbid_stat(room_id, by, start_str, end_str)
+    result[:username_data] = ChatLine.username_forbid_stat(room_id, by, start_str, end_str)
 
 
     render :json => {
