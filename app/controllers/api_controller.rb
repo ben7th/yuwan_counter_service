@@ -106,6 +106,26 @@ class ApiController < ApplicationController
     }
   end
 
+
+  def forbid_stat
+    room_id = params[:room_id]
+    by      = params[:by]
+    start_str = params[:start]
+    end_str   = params[:end]
+
+    room_chat_line = ChatLine.by_room_id(room_id)
+    result = {}
+    result[:manager_data] = room_chat_line.manager_forbid_stat(by, start_str, end_str)
+    result[:username_data] = room_chat_line.username_forbid_stat(by, start_str, end_str)
+
+
+    render :json => {
+      :by   => by,
+      :data => result
+    }
+  end
+
+
 end
 
 

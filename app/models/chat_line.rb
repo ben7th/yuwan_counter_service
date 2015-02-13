@@ -185,9 +185,7 @@ class ChatLine
                 "$gte" => start_time,
                 "$lt" => end_time,
               },
-              chat_type: {
-                "$in" => ['yuwan']
-              },
+              chat_type: ChatLine::ChatType::YUWAN
             },
           },  
           {
@@ -208,26 +206,83 @@ class ChatLine
     end
     result_data
 
-
-    # eval "
-    #   keys = StrTimeUtil.#{time_str_type}_str_list(start_time_str, end_time_str)
-    #   result_data = {}
-    #   keys.each do |key|
-    #     start_time = StrTimeUtil.start_#{time_str_type}_str_to_time(key)
-    #     end_time = StrTimeUtil.end_#{time_str_type}_str_to_time(key)
-    #     user_data = self.where(
-    #       :talk_time.gte => start_time, 
-    #       :talk_time.lt => end_time,
-    #       :chat_type => 'yuwan').group_by{|d| d.username }
+  end
 
 
-    #     user_data = user_data.each do |username, items|
-    #       user_data[username] = items.count * 100
-    #     end
-    #     result_data[key] = user_data
-    #   end
-    #   return result_data
-    # "
+
+  def self.manager_forbid_stat(time_str_type, start_time_str, end_time_str)
+    keys = StrTimeUtil.send("#{time_str_type}_str_list", start_time_str, end_time_str)
+    result_data = {}
+    keys.each do |key|
+      start_time = StrTimeUtil.send("start_#{time_str_type}_str_to_time", key)
+      end_time = StrTimeUtil.send("end_#{time_str_type}_str_to_time", key)
+
+      user_data = self.collection.aggregate(
+          {
+            "$match" => {
+              talk_time: {
+                "$gte" => start_time,
+                "$lt" => end_time,
+              },
+              chat_type: ChatLine::ChatType::FORBID
+            },
+          },  
+          {
+            "$group" => {
+              _id: "$manager", 
+              count: { "$sum" => 1 }
+            }
+          },
+          
+      )
+
+      result = {}
+      user_data.each do |item|
+        result[item["_id"]] = item["count"]
+      end
+
+      result_data[key] = result
+    end
+    result_data
+
+  end
+
+
+  def self.username_forbid_stat(time_str_type, start_time_str, end_time_str)
+    keys = StrTimeUtil.send("#{time_str_type}_str_list", start_time_str, end_time_str)
+    result_data = {}
+    keys.each do |key|
+      start_time = StrTimeUtil.send("start_#{time_str_type}_str_to_time", key)
+      end_time = StrTimeUtil.send("end_#{time_str_type}_str_to_time", key)
+
+      user_data = self.collection.aggregate(
+          {
+            "$match" => {
+              talk_time: {
+                "$gte" => start_time,
+                "$lt" => end_time,
+              },
+              chat_type: ChatLine::ChatType::FORBID
+            },
+          },  
+          {
+            "$group" => {
+              _id: "$username", 
+              count: { "$sum" => 1 }
+            }
+          },
+          
+      )
+
+      result = {}
+      user_data.each do |item|
+        result[item["_id"]] = item["count"]
+      end
+
+      result_data[key] = result
+    end
+    result_data
+
   end
 
 end
