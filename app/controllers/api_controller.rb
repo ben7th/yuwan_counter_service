@@ -131,6 +131,22 @@ class ApiController < ApplicationController
       :data => data
     }
   end
+
+  def query_user_stat
+    room_id = params[:room_id].to_i
+    username = params[:username]
+    by      = params[:by]
+    start_str = params[:start]
+    end_str   = params[:end]
+
+    result = {}
+    data = ChatLine.query_by_username(username, room_id, by, start_str, end_str)
+    render :json => {
+      :by   => by,
+      :username => username,
+      :data => data
+    }
+  end
 end
 
 

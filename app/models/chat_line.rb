@@ -289,4 +289,36 @@ class ChatLine
 
   end
 
+
+
+
+  def self.query_by_username(username, room_id, time_str_type, start_time_str, end_time_str)
+    keys = StrTimeUtil.send("#{time_str_type}_str_list", start_time_str, end_time_str)
+    result_data = {}
+    keys.each do |key|
+      start_time = StrTimeUtil.send("start_#{time_str_type}_str_to_time", key)
+      end_time = StrTimeUtil.send("end_#{time_str_type}_str_to_time", key)
+
+      user_data = self.collection.aggregate(
+          {
+            "$match" => {
+              talk_time: {
+                "$gte" => start_time,
+                "$lt" => end_time,
+              },
+              username: username,
+              chat_type: ChatLine::ChatType::CHAT,
+              room_id: room_id,
+            },
+          }
+          
+      )
+
+      result_data[key] = user_data.length
+    end
+    result_data
+
+  end
+
+
 end
