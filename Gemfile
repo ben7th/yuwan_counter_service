@@ -50,10 +50,11 @@ gem "mina",
 
 
 
-
-
-
-
+gem "sidekiq"
+# 全文搜索
+gem "elasticsearch-model", :require => "elasticsearch/model"
+gem "elasticsearch-rails", :require => "elasticsearch/rails"
+gem 'kaminari'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'

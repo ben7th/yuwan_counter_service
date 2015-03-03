@@ -147,6 +147,39 @@ class ApiController < ApplicationController
       :data => data
     }
   end
+
+  def chat_search
+    room_id = params[:room_id].to_i
+    query  = params[:query]
+    start_str = params[:start]
+    end_str   = params[:end]
+    page    = params[:page] || 1
+    per_page    = params[:per_page] || 50
+
+    chat_lines = ChatLine.chat_search(
+      room_id, 
+      query, 
+      :start_time_str => start_str, 
+      :end_time_str => end_str
+    ).page(page).per(per_page).records
+
+    data = chat_lines.map do |chat_line|
+      {
+        :username => chat_line.username,
+        :text => chat_line.text,
+        :talk_time => chat_line.talk_time.to_s
+      }
+    end
+
+    render :json => {
+      :by   => {
+        :query    => query,
+        :page     => page,
+        :per_page => per_page
+      },
+      :data => data
+    }
+  end
 end
 
 

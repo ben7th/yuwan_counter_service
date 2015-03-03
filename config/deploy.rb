@@ -56,6 +56,8 @@ task :deploy => :environment do
     to :launch do
       queue %[
         source /etc/profile
+        ./deploy/sh/sidekiq.sh stop
+        ./deploy/sh/sidekiq.sh start
         ./deploy/sh/unicorn.sh stop
         ./deploy/sh/unicorn.sh start
       ]
@@ -78,6 +80,8 @@ task :restart => :environment do
   queue %[
     source /etc/profile
     cd #{deploy_to}/#{current_path}
+    ./deploy/sh/sidekiq.sh stop
+    ./deploy/sh/sidekiq.sh start
     ./deploy/sh/unicorn.sh stop
     ./deploy/sh/unicorn.sh start
   ]
