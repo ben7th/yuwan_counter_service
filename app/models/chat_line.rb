@@ -8,6 +8,7 @@ class ChatLine
 
   include Mongoid::Document
   include Mongoid::Timestamps
+  include ChatLineSearchConfig
 
   field :room_id,          type: Integer
   field :manager,          type: String

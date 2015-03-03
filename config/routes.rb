@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       get 'chat_lines/username_yuwan_stat' => 'api#username_yuwan_stat'
       get 'chat_lines/forbid_stat' => 'api#forbid_stat'
       get 'room_status/stat'       => 'api#room_status_stat'
+      get 'chat_lines/chat_search' => 'api#chat_search'
     end
   end
 
